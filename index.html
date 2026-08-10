@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSC 2027 Countdown | Hirakdyuti</title>
+    <style>
+        /* ========== CSS Variables ========== */
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --bg-tertiary: rgba(255, 255, 255, 0.7);
+            
+            --text-primary: #1a1a1a;
+            --text-secondary: #666666;
+            --text-tertiary: #999999;
+            
+            --border-color: rgba(255, 255, 255, 0.3);
+            --border-color-subtle: rgba(0, 0, 0, 0.05);
+            
+            --accent-primary: #6366f1;
+            --accent-secondary: #8b5cf6;
+            
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.08);
+            
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* ========== Reset & Base Styles ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* ========== Animated Background ========== */
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .blob {
+            position: absolute;
+            opacity: 0.4;
+            filter: blur(80px);
+        }
+
+        .blob-1 {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            top: -10%;
+            right: -5%;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .blob-2 {
+            width: 250px;
+            height: 250px;
+            background: linear-gradient(135deg, #8b5cf6, #d8b4fe);
+            bottom: -5%;
+            left: -5%;
+            animation: float 25s ease-in-out infinite reverse;
+        }
+
+        .blob-3 {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, #c084fc, #e9d5ff);
+            top: 50%;
+            left: 20%;
+            animation: float 30s ease-in-out infinite;
+            opacity: 0.2;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0);
+            }
+            33% {
+                transform: translate(50px, -50px);
+            }
+            66% {
+                transform: translate(-50px, 50px);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .blob {
+                animation: none;
+            }
+        }
+
+        /* ========== Header ========== */
+        header {
+            padding: 2rem 1.5rem;
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.5);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: var(--transition);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            color: var(--text-primary);
+        }
+
+        .header-date {
+            font-size: 0.875rem;
+            color: var(--text-tertiary);
+        }
+
+        /* ========== Main Container ========== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* ========== Hero Section ========== */
+        .hero {
+            padding: 4rem 1.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .hero-title {
+            font-size: clamp(2rem, 8vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            color: var(--text-secondary);
+            font-weight: 400;
+            letter-spacing: 0.3px;
+            max-width: 600px;
+            margin: 0 auto;
+            animation: fadeInDown 0.8s ease-out 0.1s both;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ========== Countdown Cards ========== */
+        .countdowns-section {
+            margin-bottom: 3rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .countdown-card {
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .countdown-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0));
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .countdown-card:hover::before {
+            opacity: 1;
+        }
+
+        .countdown-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: rgba(99, 102, 241, 0.3);
+            background: rgba(255, 255, 255, 0.75);
+        }
+
+        .countdown-card.primary {
+            grid-column: 1 / -1;
+        }
+
+        @media (min-width: 768px) {
+            .countdown-card.primary {
+                grid-column: auto;
+            }
+        }
+
+        .countdown-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--accent-primary);
+            margin-bottom: 0.75rem;
+        }
+
+        .countdown-date {
+            font-size: clamp(0.95rem, 2vw, 1.1rem);
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+
+        .countdown-display {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .countdown-unit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .countdown-number {
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+            color: var(--text-primary);
+            text-align: center;
+            min-height: 1.2em;
+            letter-spacing: -1px;
+            transition: all 0.3s ease;
+        }
+
+        .countdown-number.update {
+            animation: numberUpdate 0.5s ease;
+        }
+
+        @keyframes numberUpdate {
+            0% {
+                transform: translateY(-10px);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .countdown-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--text-tertiary);
+        }
+
+        .countdown-message {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            text-align: center;
+            font-style: italic;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color-subtle);
+            line-height: 1.5;
+        }
+
+        .countdown-status {
+            font-size: 1.25rem;
+            font-weight: 700;
+            text-align: center;
+            color: var(--accent-primary);
+            padding: 2rem 0;
+            letter-spacing: 0.5px;
+        }
+
+        .countdown-status.completed {
+            color: var(--text-tertiary);
+            font-size: 1.1rem;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .countdown-card,
+            .countdown-number {
+                transition: none;
+            }
+
+            .countdown-number.update {
+                animation: none;
+            }
+        }
+
+        /* ========== Timeline Section ========== */
+        .timeline-section {
+            margin: 3rem 0;
+            animation: fadeInUp 0.8s ease-out 0.3s both;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            text-align: center;
+            letter-spacing: -0.5px;
+        }
+
+        .timeline {
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .timeline-item {
+            text-align: center;
+            position: relative;
+        }
+
+        .timeline-item:not(:last-child)::after {
+            content: '→';
+            position: absolute;
+            right: -1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            color: var(--text-tertiary);
+        }
+
+        .timeline-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-date {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .timeline-description {
+            font-size: 0.85rem;
+            color: var(--text-tertiary);
+            margin-top: 0.5rem;
+        }
+
+        .timeline-item.active .timeline-label {
+            color: var(--accent-secondary);
+            font-size: 0.95rem;
+        }
+
+        .timeline-item.active .timeline-date {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        @media (max-width: 640px) {
+            .timeline {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .timeline-item:not(:last-child)::after {
+                content: '↓';
+                right: 50%;
+                bottom: -1.5rem;
+                top: auto;
+                transform: translateX(50%);
+            }
+        }
+
+        /* ========== Motivation Card ========== */
+        .motivation-section {
+            margin-bottom: 3rem;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+
+        .motivation-card {
+            backdrop-filter: blur(20px);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(99, 102, 241, 0.05));
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            text-align: center;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .motivation-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .motivation-card:hover::before {
+            left: 100%;
+        }
+
+        .motivation-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+            border-color: rgba(99, 102, 241, 0.3);
+        }
+
+        .motivation-text {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            font-weight: 500;
+            color: var(--text-primary);
+            line-height: 1.8;
+            letter-spacing: 0.3px;
+            z-index: 1;
+            position: relative;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .motivation-card::before {
+                display: none;
+            }
+
+            .motivation-card:hover {
+                transform: none;
+            }
+        }
+
+        /* ========== Footer ========== */
+        footer {
+            margin-top: 4rem;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            border-top: 1px solid var(--border-color-subtle);
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .footer-text {
+            font-size: 0.875rem;
+            color: var(--text-tertiary);
+            letter-spacing: 0.2px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-text:hover {
+            color: var(--text-secondary);
+        }
+
+        /* ========== Responsive Design ========== */
+        @media (max-width: 1024px) {
+            .countdowns-section {
+                gap: 1.5rem;
+            }
+
+            .countdown-card {
+                padding: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 1.5rem 1rem;
+            }
+
+            .hero {
+                padding: 2.5rem 1rem;
+                margin-bottom: 2rem;
+            }
+
+            .hero-title {
+                font-size: 1.75rem;
+                margin-bottom: 0.75rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .countdowns-section {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                margin-bottom: 2rem;
+            }
+
+            .countdown-card.primary {
+                grid-column: auto;
+            }
+
+            .countdown-card {
+                padding: 1.75rem;
+            }
+
+            .countdown-display {
+                gap: 0.75rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .countdown-unit {
+                gap: 0.25rem;
+            }
+
+            .countdown-number {
+                font-size: 1.75rem;
+            }
+
+            .section-title {
+                font-size: 1.1rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .timeline {
+                padding: 1.5rem;
+            }
+
+            .motivation-card {
+                padding: 1.5rem;
+                min-height: 100px;
+            }
+
+            .motivation-text {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 1rem;
+            }
+
+            .hero {
+                padding: 2rem 1rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .hero-title {
+                font-size: 1.5rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 0.95rem;
+            }
+
+            .countdown-card {
+                padding: 1.5rem;
+            }
+
+            .countdown-title {
+                font-size: 0.8rem;
+            }
+
+            .countdown-date {
+                font-size: 0.9rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .countdown-display {
+                grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+                gap: 0.5rem;
+                margin-bottom: 1.25rem;
+            }
+
+            .countdown-number {
+                font-size: 1.25rem;
+            }
+
+            .countdown-label {
+                font-size: 0.7rem;
+            }
+
+            .countdown-message {
+                font-size: 0.85rem;
+                padding-top: 1rem;
+            }
+
+            .timeline {
+                padding: 1.25rem;
+                gap: 1rem;
+            }
+
+            .timeline-label {
+                font-size: 0.8rem;
+            }
+
+            .timeline-date {
+                font-size: 0.85rem;
+            }
+
+            .timeline-description {
+                font-size: 0.75rem;
+            }
+
+            .motivation-card {
+                padding: 1.25rem;
+                min-height: 90px;
+            }
+
+            .motivation-text {
+                font-size: 0.95rem;
+                line-height: 1.6;
+            }
+
+            footer {
+                margin-top: 3rem;
+                padding: 1.5rem 1rem;
+            }
+
+            .footer-text {
+                font-size: 0.8rem;
+            }
+        }
+
+        /* ========== Print Styles ========== */
+        @media print {
+            .background-animation,
+            header {
+                display: none;
+            }
+
+            body {
+                background: white;
+            }
+
+            .countdown-card {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Animation -->
+    <div class="background-animation">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">Hirakdyuti</div>
+            <div class="header-date" id="current-date"></div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1 class="hero-title">Your Countdown Starts Now.</h1>
+            <p class="hero-subtitle">Every second brings you closer to your goal.</p>
+        </section>
+
+        <!-- Countdown Cards Section -->
+        <section class="countdowns-section">
+            <!-- Test Examination Card -->
+            <div class="countdown-card" id="test-card">
+                <h2 class="countdown-title">Test Examination</h2>
+                <p class="countdown-date">28 OCTOBER 2026 • 10:00 AM</p>
+                
+                <div class="countdown-display" id="test-countdown">
+                    <div class="countdown-unit">
+                        <div class="countdown-number" data-type="months">00</div>
+                        <div class="countdown-label">Months</div>
+                    </div>
+                    <div class="countdown-unit">
+                        <div class="countdown-number" data-type="days">00</div>
+                        <div class="countdown-label">Days</div>
+                    </div>
+                    <div class="countdown-unit">
+                        <div class="countdown-number" data-type="hours">00</div>
+                        <div class="countdown-label">Hours</div>
+                    </div>
+                    <div class="countdown-unit">
+                        <div class="countdown-number" data-type="minutes">00</div>
+                        <div class="countdown-label">Minutes</div>
+                    </div>
+                    <div class="countdown-unit">
+                        <div class="countdown-number" data-type="seconds">00</div>
+                        <div class="countdown-label">Seconds</div>
+                    </div>
+                </div>
+
+                <p class="countdown-message">First milestone. Stay consistent.</p>
+            </div>
+
+            <!-- SSC Examination Card -->
+            <div class="countdown-card primary" id="ssc-card">
+                <h2 class="countdown-title">SSC Examination 2027</h2>
+                <p class="countdown-date">7 JANUARY 2027 • 10:00 AM</p>
+                
+                <div class="countdown-display" id="ssc-countdown">
+                    <div class="countdown-unit">
+                        <div class="countdown-number" data-type="months">00</div>
+                        <div class="countdown-label">Months</div>
+                    </div>
+                    <div class="countdown-unit">
+                        <div class="countdown-number" data-type="days">00</div>
+                        <div class="countdown-label">Days</div>
+                    </div>
+                    <div class="countdown-unit">
+                        <div class="countdown-number" data-type="hours">00</div>
+                        <div class="countdown-label">Hours</div>
+                    </div>
+                    <div class="countdown-unit">
+                        <div class="countdown-number" data-type="minutes">00</div>
+                        <div class="countdown-label">Minutes</div>
+                    </div>
+                    <div class="countdown-unit">
+                        <div class="countdown-number" data-type="seconds">00</div>
+                        <div class="countdown-label">Seconds</div>
+                    </div>
+                </div>
+
+                <p class="countdown-message">The final goal. Make every day count.</p>
+            </div>
+        </section>
+
+        <!-- Timeline Section -->
+        <section class="timeline-section">
+            <h2 class="section-title">The Road to SSC 2027</h2>
+            <div class="timeline">
+                <div class="timeline-item active">
+                    <div class="timeline-label">Now</div>
+                    <div class="timeline-date" id="timeline-now"></div>
+                </div>
+                <div class="timeline-item" id="timeline-test">
+                    <div class="timeline-label">Test Exam</div>
+                    <div class="timeline-date">28 Oct 2026</div>
+                    <div class="timeline-description">First milestone</div>
+                </div>
+                <div class="timeline-item" id="timeline-ssc">
+                    <div class="timeline-label">SSC Exam</div>
+                    <div class="timeline-date">7 Jan 2027</div>
+                    <div class="timeline-description">Ultimate goal</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Motivation Section -->
+        <section class="motivation-section">
+            <div class="motivation-card" id="motivation-card">
+                <p class="motivation-text" id="motivation-text">Small progress every day becomes extraordinary progress.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p class="footer-text">Made by Hirakdyuti Bairagi</p>
+    </footer>
+
+    <script>
+        // ========== Countdown Configuration ==========
+        const TIMEZONE = 'Asia/Dhaka'; // Bangladesh timezone
+        const EXAMS = {
+            test: {
+                date: new Date('2026-10-28T10:00:00'),
+                cardId: 'test-card',
+                countdownId: 'test-countdown',
+                timelineId: 'timeline-test'
+            },
+            ssc: {
+                date: new Date('2027-01-07T10:00:00'),
+                cardId: 'ssc-card',
+                countdownId: 'ssc-countdown',
+                timelineId: 'timeline-ssc'
+            }
+        };
+
+        const MOTIVATIONAL_MESSAGES = [
+            "Small progress every day becomes extraordinary progress.",
+            "Your future self will thank you for studying today.",
+            "Consistency beats intensity.",
+            "One focused hour is better than hours of distraction.",
+            "Do not count the days. Make the days count.",
+            "You are closer than you were yesterday.",
+            "Stay focused. Keep moving.",
+            "Every solved problem is one step forward.",
+            "The best time to plant a tree was 20 years ago. The second best time is now.",
+            "Your dedication today determines your success tomorrow.",
+            "Progress is progress, no matter how small.",
+            "Focus on what you can control.",
+            "Every minute of study is an investment in your future.",
+            "Challenge yourself to be better than yesterday.",
+            "Your hard work will pay off."
+        ];
+
+        // ========== Utility Functions ==========
+
+        /**
+         * Get current date in Bangladesh timezone
+         */
+        function getNowInBangladesh() {
+            const formatter = new Intl.DateTimeFormat('en-US', {
+                timeZone: TIMEZONE,
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            });
+
+            const parts = formatter.formatToParts(new Date());
+            const date = {};
+            
+            for (const part of parts) {
+                date[part.type] = part.value;
+            }
+
+            return new Date(
+                parseInt(date.year),
+                parseInt(date.month) - 1,
+                parseInt(date.day),
+                parseInt(date.hour),
+                parseInt(date.minute),
+                parseInt(date.second)
+            );
+        }
+
+        /**
+         * Calculate complete months between two dates
+         */
+        function getCompleteMonths(fromDate, toDate) {
+            let months = 0;
+            let current = new Date(fromDate);
+
+            while (true) {
+                const next = new Date(current);
+                next.setMonth(next.getMonth() + 1);
+
+                if (next > toDate) break;
+                
+                months++;
+                current = next;
+            }
+
+            return { months, nextMonthDate: current };
+        }
+
+        /**
+         * Calculate remaining time until target date
+         */
+        function calculateCountdown(targetDate) {
+            const now = getNowInBangladesh();
+
+            if (now >= targetDate) {
+                return {
+                    months: 0,
+                    days: 0,
+                    hours: 0,
+                    minutes: 0,
+                    seconds: 0,
+                    isComplete: true
+                };
+            }
+
+            // Calculate complete months
+            const { months, nextMonthDate } = getCompleteMonths(now, targetDate);
+
+            // Calculate remaining days
+            let daysRemaining = 0;
+            let current = new Date(nextMonthDate);
+
+            while (true) {
+                const nextDay = new Date(current);
+                nextDay.setDate(nextDay.getDate() + 1);
+
+                if (nextDay > targetDate) break;
+
+                daysRemaining++;
+                current = nextDay;
+            }
+
+            // Calculate remaining time
+            const timeRemaining = targetDate - current;
+            const hours = Math.floor(timeRemaining / (1000 * 60 * 60)) % 24;
+            const minutes = Math.floor(timeRemaining / (1000 * 60)) % 60;
+            const seconds = Math.floor(timeRemaining / 1000) % 60;
+
+            return {
+                months,
+                days: daysRemaining,
+                hours,
+                minutes,
+                seconds,
+                isComplete: false
+            };
+        }
+
+        /**
+         * Format number with leading zero
+         */
+        function formatNumber(num) {
+            return String(num).padStart(2, '0');
+        }
+
+        /**
+         * Update countdown display
+         */
+        function updateCountdown(examKey) {
+            const exam = EXAMS[examKey];
+            const countdown = calculateCountdown(exam.date);
+            const countdownElement = document.getElementById(exam.countdownId);
+
+            if (countdown.isComplete) {
+                const card = document.getElementById(exam.cardId);
+                const message = examKey === 'test' 
+                    ? 'TEST EXAMINATION HAS BEGUN' 
+                    : 'SSC EXAMINATION HAS BEGUN';
+                
+                countdownElement.innerHTML = `<div class="countdown-status">${message}</div>`;
+                card.style.opacity = '0.8';
+                return;
+            }
+
+            const units = [
+                { type: 'months', value: countdown.months },
+                { type: 'days', value: countdown.days },
+                { type: 'hours', value: countdown.hours },
+                { type: 'minutes', value: countdown.minutes },
+                { type: 'seconds', value: countdown.seconds }
+            ];
+
+            units.forEach(unit => {
+                const element = countdownElement.querySelector(`[data-type="${unit.type}"]`);
+                const formattedValue = formatNumber(unit.value);
+                
+                if (element.textContent !== formattedValue) {
+                    element.textContent = formattedValue;
+                    element.classList.remove('update');
+                    void element.offsetWidth; // Trigger reflow
+                    element.classList.add('update');
+                }
+            });
+
+            // Check if exam has passed
+            const card = document.getElementById(exam.cardId);
+            const messageEl = card.querySelector('.countdown-message');
+            
+            if (getNowInBangladesh() > exam.date) {
+                const completedMessage = examKey === 'test'
+                    ? 'TEST EXAMINATION COMPLETED ✓'
+                    : 'SSC EXAMINATION COMPLETED ✓';
+                
+                countdownElement.innerHTML = `<div class="countdown-status completed">${completedMessage}</div>`;
+                card.style.opacity = '0.6';
+                messageEl.style.display = 'none';
+            }
+        }
+
+        /**
+         * Update current date in header
+         */
+        function updateCurrentDate() {
+            const now = getNowInBangladesh();
+            const dateFormatter = new Intl.DateTimeFormat('en-US', {
+                weekday: 'short',
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric'
+            });
+
+            document.getElementById('current-date').textContent = dateFormatter.format(now);
+        }
+
+        /**
+         * Update timeline
+         */
+        function updateTimeline() {
+            const now = getNowInBangladesh();
+            const testDate = EXAMS.test.date;
+            const sscDate = EXAMS.ssc.date;
+
+            const timelineNow = document.getElementById('timeline-now');
+            const timelineTest = document.getElementById('timeline-test');
+            const timelineSsc = document.getElementById('timeline-ssc');
+
+            const dateFormatter = new Intl.DateTimeFormat('en-US', {
+                month: 'short',
+                day: 'numeric'
+            });
+
+            timelineNow.textContent = dateFormatter.format(now);
+
+            // Update active states
+            timelineTest.classList.remove('active');
+            timelineSsc.classList.remove('active');
+
+            if (now < testDate) {
+                timelineTest.classList.add('active');
+            } else if (now < sscDate) {
+                timelineSsc.classList.add('active');
+            } else {
+                timelineSsc.classList.remove('active');
+            }
+        }
+
+        /**
+         * Set random motivational message
+         */
+        function setMotivationalMessage() {
+            const message = MOTIVATIONAL_MESSAGES[
+                Math.floor(Math.random() * MOTIVATIONAL_MESSAGES.length)
+            ];
+            document.getElementById('motivation-text').textContent = message;
+        }
+
+        /**
+         * Initialize all countdowns and updates
+         */
+        function init() {
+            updateCurrentDate();
+            updateCountdown('test');
+            updateCountdown('ssc');
+            updateTimeline();
+            setMotivationalMessage();
+
+            // Update every second
+            setInterval(() => {
+                updateCountdown('test');
+                updateCountdown('ssc');
+            }, 1000);
+
+            // Update date and timeline every minute
+            setInterval(() => {
+                updateCurrentDate();
+                updateTimeline();
+            }, 60000);
+        }
+
+        // ========== Event Listeners ==========
+
+        document.addEventListener('DOMContentLoaded', init);
+
+        // Make motivation card clickable to show new message
+        document.getElementById('motivation-card').addEventListener('click', () => {
+            const textElement = document.getElementById('motivation-text');
+            textElement.style.opacity = '0';
+            
+            setTimeout(() => {
+                setMotivationalMessage();
+                textElement.style.opacity = '1';
+            }, 200);
+        });
+
+        // Add smooth transition to motivation text
+        const style = document.createElement('style');
+        style.textContent = `
+            #motivation-text {
+                transition: opacity 0.2s ease;
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Respect prefers-reduced-motion
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (prefersReducedMotion) {
+            document.documentElement.style.setProperty('--transition', 'none');
+        }
+    </script>
+</body>
+</html>
